@@ -30,7 +30,7 @@ exports.createData=(async (req,res,next)=>{
 })
 
 
-exports.readData=(async (req,res,next)=>{
+exports.readAllData=(async (req,res,next)=>{
     console.log("listing request from the postman");
     let result=[];
     db
@@ -62,7 +62,7 @@ exports.readData=(async (req,res,next)=>{
 exports.updateData=((req,res,next)=>{
     db
     .collection(req.collectionName)
-    .doc(req.docName)
+    .doc(req.params.id)
     .update(req.data)
     .then((querySnapshot) => {
         res.status(200).json({
@@ -82,8 +82,8 @@ exports.updateData=((req,res,next)=>{
 
 exports.deleteData=((req,res,next)=>{
     db
-    .collection(req.collectionName)
-    .doc(req.docName)
+    .collection("user")
+    .doc(req.params.id)
     .delete()
     .then((querySnapshot) => {
         res.status(200).json({

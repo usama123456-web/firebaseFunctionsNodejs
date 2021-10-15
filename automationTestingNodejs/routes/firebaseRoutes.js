@@ -4,10 +4,15 @@ const router=express.Router()
 
 router
 .route('/firebase')
-.get(firebaseController.readData)
+.get(firebaseController.readAllData)
 .post(firebaseController.createData)
-.patch(firebaseController.updateData)
+
+
+
+router
+.route('/:id')
 .delete(firebaseController.deleteData)
+.patch(firebaseController.updateData)
 
 
 module.exports=router
