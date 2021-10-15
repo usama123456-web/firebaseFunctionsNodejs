@@ -32,7 +32,6 @@ exports.createData=(async (req,res,next)=>{
 
 exports.readData=(async (req,res,next)=>{
     console.log("listing request from the postman");
-
     let result=[];
     db
     .collection("user")
@@ -46,49 +45,57 @@ exports.readData=(async (req,res,next)=>{
           ...doc.data(),
         });
       })
-    })
-    try {
-       
-        res.status(200).json({
-            status:"200",
-            data:result
-        
 
-        })
-     }catch(err){
+      res.status(200).json({
+        status:"200",
+        data:result
+    })
+    })
+    .catch(err=>{
         res.status(200).json({
             status:"200",
             error:err
         })
-     }
+    })
 })
 
 exports.updateData=((req,res,next)=>{
-
-    try {
+    db
+    .collection(req.collectionName)
+    .doc(req.docName)
+    .update(req.data)
+    .then((querySnapshot) => {
         res.status(200).json({
             status:"200",
             message:""
         })
-     }catch(err){
+    })
+    .catch((err) => {
         res.status(200).json({
             status:"200",
             error:err
         })
-     }
+    });
+
+
 })
 
 exports.deleteData=((req,res,next)=>{
-
-    try {
+    db
+    .collection(req.collectionName)
+    .doc(req.docName)
+    .delete()
+    .then((querySnapshot) => {
         res.status(200).json({
             status:"200",
-            message:""
+            message:"data deleted "
         })
-     }catch(err){
+    })
+    .catch((err) => {
         res.status(200).json({
             status:"200",
             error:err
         })
-     }
+    });
+
 })
